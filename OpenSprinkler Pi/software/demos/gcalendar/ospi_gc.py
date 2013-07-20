@@ -14,6 +14,14 @@ except ImportError:
 import gdata.calendar
 import gdata.calendar.service
 
+def getDataPin():
+  if GPIO.RPI_REVISION == 1:
+      return 21 #Use for rev 1 Pi
+  elif GPIO.RPI_REVISION == 2:
+      return 27 #Use for rev 2 Pi
+  else:
+      sys.exit ("Error: Unknown RaspberryPi Revision %d" % GPIO.RPI_REVISION)
+
 # ======================================================
 # !!! MODIFY THE CALENDAR ID AND STATION NAMES BELOW !!!
 # ======================================================
@@ -57,7 +65,8 @@ MAX_NSTATIONS = 64
 # OSPI PIN DEFINES
 pin_sr_clk =  4
 pin_sr_noe = 17
-pin_sr_dat = 21 # NOTE: if you have RPi rev.2, change this to 27
+
+pin_sr_dat = getDataPin()
 pin_sr_lat = 22
 
 calendar_service = gdata.calendar.service.CalendarService()
